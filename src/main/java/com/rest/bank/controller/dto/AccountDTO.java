@@ -1,0 +1,15 @@
+package com.rest.bank.controller.dto;
+
+import com.sun.istack.NotNull;
+import lombok.*;
+
+@Data
+public class AccountDTO {
+
+    @NotNull
+    private int documentId;
+
+    @NotNull
+    private String name;
+}
+
