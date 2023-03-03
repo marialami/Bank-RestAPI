@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "fa2cedaf-ad0b-4fce-8915-a2a28e7ccf5b",
+		"name": "Bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26062871"
+	},
+	"item": [
+		{
+			"name": "createAccount",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"mia\",\r\n    \"documentId\": \"1005280915\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/createAccount",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"createAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deposit",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountNum\": \"996636998224100\",\r\n    \"balance\": \"500\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/deposit/1003102808728700/200",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"deposit",
+						"1003102808728700",
+						"200"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getBalance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/myBalance/1003102808728700",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"myBalance",
+						"1003102808728700"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transfer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/transfer/1001738724014300/1001827183539300/100",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"1001738724014300",
+						"1001827183539300",
+						"100"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
