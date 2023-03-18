@@ -2,6 +2,7 @@ package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
 import com.rest.bank.repository.AccountRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -13,12 +14,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 @Service
+@AllArgsConstructor
 public class AccountService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private ServiceBD bd;
 
-    @Async
     public Account createAccount(String name, int id){
         Account account = Account.builder()
                 .documentId(id)
@@ -27,24 +27,21 @@ public class AccountService {
                 .accountNum(System.nanoTime())
                 .creationDate(new Date())
                 .build();
-        accountRepository.save(account);
+        bd.save(account);
         return account;
     }
 
-    @Async
     public void makeDeposit(Long accountNumber, BigDecimal depositAmount) {
 
-        Account account = accountRepository.selectAccount(accountNumber);
-        accountRepository.updateAccount(account.getBalance().add(depositAmount), accountNumber);
+        Account account = bd.selectAccount(accountNumber);
+        bd.updateAccount(account.getBalance().add(depositAmount), accountNumber);
 
     }
 
-    @Async
     public BigDecimal getBalance(Long accountNumber) {
-        return accountRepository.getBalance(accountNumber);
+        return bd.getBalance(accountNumber);
     }
 
-    @Async
     public Future<String> transfer(Long originAccountNumber, Long destinationAccountNumber, BigDecimal transferAmount) throws Exception {
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
