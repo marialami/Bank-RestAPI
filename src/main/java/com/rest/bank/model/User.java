@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -23,5 +24,5 @@ public class User {
     private String name;
 
     @OneToMany(mappedBy = "user")
-    private List<Account> accounts;
+    private Set<Account> accounts;
 }

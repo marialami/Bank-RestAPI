@@ -25,6 +25,5 @@ public class Account {
 
     private Date creationDate;
 
-    @Id
     private Long accountNum;
 }
