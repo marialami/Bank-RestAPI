@@ -4,7 +4,7 @@ import com.rest.bank.model.Account;
 
 import java.math.BigDecimal;
 
-public interface BD {
+public interface AccountBD {
 
     Account save(Account account);
 

@@ -3,14 +3,13 @@ package com.rest.bank.service;
 import com.rest.bank.model.Account;
 import com.rest.bank.repository.AccountRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
-public class ServiceBD implements BD {
+public class AccountServiceBD implements AccountBD {
 
     private AccountRepository accountRepository;
     @Override

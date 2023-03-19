@@ -1,10 +1,7 @@
 package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
-import com.rest.bank.repository.AccountRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -17,12 +14,10 @@ import java.util.concurrent.Future;
 @AllArgsConstructor
 public class AccountService {
 
-    private ServiceBD bd;
+    private AccountServiceBD bd;
 
     public Account createAccount(String name, int id){
         Account account = Account.builder()
-                .documentId(id)
-                .name(name)
                 .balance(new BigDecimal(0))
                 .accountNum(System.nanoTime())
                 .creationDate(new Date())
