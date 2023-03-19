@@ -1,6 +1,7 @@
 package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
+import com.rest.bank.model.User;
 import com.rest.bank.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

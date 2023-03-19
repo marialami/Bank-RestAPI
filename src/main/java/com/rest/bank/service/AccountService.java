@@ -1,6 +1,7 @@
 package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
+import com.rest.bank.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +17,15 @@ public class AccountService {
 
     private AccountServiceBD bd;
 
-    public Account createAccount(String name, int id){
+    public Account createAccount(User user){
         Account account = Account.builder()
                 .balance(new BigDecimal(0))
                 .accountNum(System.nanoTime())
                 .creationDate(new Date())
+                .user(user)
                 .build();
-        bd.save(account);
-        return account;
+
+        return bd.save(account);
     }
 
     public void makeDeposit(Long accountNumber, BigDecimal depositAmount) {

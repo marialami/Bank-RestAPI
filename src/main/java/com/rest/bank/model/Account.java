@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "account")
+@Table(name = "tbl_account")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,10 +20,10 @@ public class Account {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
     private BigDecimal balance;
 
     private Date creationDate;
 
+    @Id
     private Long accountNum;
 }

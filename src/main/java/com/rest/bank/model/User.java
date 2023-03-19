@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
 @Entity
-@Table(name = "user")
+@Table(name = "tbl_user")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +24,6 @@ public class User {
 
     private String name;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Account> accounts;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Account> accounts;
 }
