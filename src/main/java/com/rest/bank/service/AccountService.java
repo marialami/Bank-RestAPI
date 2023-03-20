@@ -30,8 +30,7 @@ public class AccountService {
 
     public void makeDeposit(Long accountNumber, BigDecimal depositAmount) {
 
-        Account account = bd.selectAccount(accountNumber);
-        bd.updateAccount(account.getBalance().add(depositAmount), accountNumber);
+        bd.updateAccount(getBalance(accountNumber).add(depositAmount), accountNumber);
 
     }
 

@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
@@ -23,4 +24,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query("SELECT a.balance FROM Account a WHERE a.accountNum = :accountNumber ")
     BigDecimal getBalance(@Param("accountNumber") Long accountNumber);
+
 }

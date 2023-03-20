@@ -10,14 +10,14 @@ import com.rest.bank.service.AccountService;
 import com.rest.bank.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,13 +26,14 @@ public class UserController {
 
     private UserService userService;
     private AccountService accountService;
+    private AccountRepository accountRepository;
 
     @PostMapping("/users")
     public User createUser(@RequestBody UserDTO userDTO) {
         return userService.createUser(userDTO.getDocumentId(),userDTO.getName());
     }
 
-    @PostMapping("/users/{userId}/accounts")
+    @PostMapping("/users/{userId}")
     public String createAccount(@PathVariable int userId) {
         User user = userService.findById(userId).get();
         if (user.getAccounts().size() >= 3) {
@@ -43,5 +44,16 @@ public class UserController {
         }
 
 
+    }
+
+    @GetMapping("/{userId}/accounts")
+    public List<String> getAccountsForUser(@PathVariable int userId) {
+        List<String> accounts = new ArrayList<>();
+        User user = userService.findById(userId).get();
+        for(Account a: user.getAccounts())
+        {
+            accounts.add("Numero de Cuenta : "+a.getAccountNum());
+        }
+        return accounts;
     }
 }

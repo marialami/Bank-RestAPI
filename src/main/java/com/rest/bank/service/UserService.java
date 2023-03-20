@@ -28,8 +28,7 @@ public class UserService {
     public Optional<User> findById(int id){
         return rp.findById(id);
     }
-    public int getNumAccounts(int id){
-        return findById(id).get().getAccounts().size();
-    }
+
+
 
 }
