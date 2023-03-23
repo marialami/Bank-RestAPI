@@ -18,15 +18,10 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping(path="/createAccount", consumes="application/json")
-    public Account generateAccount(@RequestBody AccountDTO account) {
 
-        return accountService.createAccount(account.getName(), account.getDocumentId());
-    }
-
-    @PutMapping(path = "/deposit/{accountNumber}/{depositAmount}")
-    public void depositFunds(@PathVariable Long accountNumber, @PathVariable BigDecimal depositAmount) {
-        accountService.makeDeposit(accountNumber, depositAmount);
+    @PutMapping(path = "/deposit")
+    public void depositFunds(@RequestBody AccountDTO accountDTO) {
+        accountService.makeDeposit(accountDTO.getAccountNumber(), accountDTO.getDepositAmount());
     }
 
     @GetMapping(path = "/myBalance/{accountNumber}")
