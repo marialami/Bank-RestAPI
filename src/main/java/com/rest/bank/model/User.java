@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 
 @Entity
-@Table(name = "tbl_user")
+@Table(name = "USER")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,9 +21,13 @@ import java.util.Set;
 public class User {
 
     @Id
-    private int id;
+    private int document;
 
     private String name;
+
+    private String last_name;
+
+    private Date date_created;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts;

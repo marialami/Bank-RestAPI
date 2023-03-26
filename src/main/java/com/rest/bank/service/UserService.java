@@ -6,6 +6,7 @@ import com.rest.bank.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -14,13 +15,15 @@ import java.util.Set;
 @AllArgsConstructor
 public class UserService {
 
-    private UserRepository rp;
+    private UserDao rp;
 
-    public User createUser(int id, String name){
+    public User createUser(int document, String name, String lastName){
         User user = User.builder()
-                .id(id)
+                .document(document)
                 .name(name)
+                .last_name(lastName)
                 .accounts(List.of())
+                .date_created(new Date())
                 .build();
         return rp.save(user);
     }

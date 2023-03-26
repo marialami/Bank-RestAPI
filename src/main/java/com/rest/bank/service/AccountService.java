@@ -1,7 +1,9 @@
 package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
+import com.rest.bank.model.Transaction;
 import com.rest.bank.model.User;
+import com.rest.bank.repository.TransactionRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,38 +17,39 @@ import java.util.concurrent.Future;
 @AllArgsConstructor
 public class AccountService {
 
-    private AccountServiceBD bd;
+    private AccountDao bd;
 
-    public Account createAccount(User user){
+    public Account createAccount(User user, String type){
+
         Account account = Account.builder()
-                .balance(new BigDecimal(0))
-                .accountNum(System.nanoTime())
-                .creationDate(new Date())
+                .money(0)
+                .date_created(new Date())
                 .user(user)
+                .type(type)
                 .build();
 
         return bd.save(account);
     }
 
-    public void makeDeposit(Long accountNumber, BigDecimal depositAmount) {
+    public void makeDeposit(int id, int depositAmount) {
 
-        bd.updateAccount(getBalance(accountNumber).add(depositAmount), accountNumber);
+        bd.updateAccount(getBalance(id) + depositAmount , id);
 
     }
 
-    public BigDecimal getBalance(Long accountNumber) {
-        return bd.getBalance(accountNumber);
+    public int getBalance(int id) {
+        return bd.getBalance(id);
     }
 
-    public Future<String> transfer(Long originAccountNumber, Long destinationAccountNumber, BigDecimal transferAmount) throws Exception {
+    public Future<String> transfer(int originAccountNumber, int destinationAccountNumber, int transferAmount) throws Exception {
 
         ExecutorService executor = Executors.newFixedThreadPool(1);
 
         Future<String> future = executor
                 .submit(() -> {
-                    BigDecimal originBalance = getBalance(originAccountNumber);
-                    if(originBalance.compareTo(transferAmount) >= 1) {
-                        makeDeposit(originAccountNumber, transferAmount.negate());
+                    int originBalance = getBalance(originAccountNumber);
+                    if(originBalance >= transferAmount) {
+                        makeDeposit(originAccountNumber, -transferAmount);
                         makeDeposit(destinationAccountNumber, transferAmount);
                         return "Transaction completed successfully";
                     }

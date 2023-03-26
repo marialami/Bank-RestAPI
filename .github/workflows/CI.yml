@@ -3,11 +3,9 @@ name: CI
 on:
   pull_request:
     branches: ["master", "develop"]
-
 jobs:
   build:
     run-on: ubuntu-latest
-
     steps:
       - name: Descargar el proyecto
         uses: actions/checkout@v3

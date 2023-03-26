@@ -4,14 +4,14 @@ import com.sun.istack.NotNull;
 import lombok.Data;
 
 @Data
-public class UserDTO {
-    @NotNull
-    private int documentId;
+public class TransferDTO {
 
     @NotNull
-    private String name;
+    private int origin;
 
     @NotNull
-    private String last_name;
+    private int destination;
 
+    @NotNull
+    private int amount;
 }

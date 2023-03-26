@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "tbl_account")
+@Table(name = "ACCOUNT")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,12 +18,15 @@ import java.util.Date;
 public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user")
     private User user;
-    private BigDecimal balance;
+    private int money;
 
-    private Date creationDate;
+    private Date date_created;
+
+    private String type;
 
     @Id
-    private Long accountNum;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
 }
