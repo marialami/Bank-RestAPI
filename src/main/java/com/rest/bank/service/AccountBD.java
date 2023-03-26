@@ -9,11 +9,11 @@ public interface AccountBD {
 
     Account save(Account account);
 
-    Account selectAccount(Long accountNumber);
+    Account selectAccount(int id);
 
-    void updateAccount(BigDecimal balance, Long accountNumber);
+    void updateAccount(int money, int id);
 
-    BigDecimal getBalance(Long accountNumber);
+    int getBalance(int id);
 
 
 

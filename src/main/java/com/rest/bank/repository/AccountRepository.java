@@ -12,17 +12,17 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface AccountRepository extends JpaRepository<Account, Long> {
+public interface AccountRepository extends JpaRepository<Account, Integer> {
 
-    @Query("SELECT a FROM Account a WHERE a.accountNum = :accountNumber")
-    Account selectAccount(@Param("accountNumber") Long accountNumber);
+    @Query("SELECT a FROM Account a WHERE a.id = :id")
+    Account selectAccount(@Param("id") int id);
 
     @Modifying()
     @Transactional
-    @Query("UPDATE Account a SET a.balance = :balance WHERE a.accountNum = :accountNumber")
-    int updateAccount(@Param("balance") BigDecimal balance, @Param("accountNumber") Long accountNumber);
+    @Query("UPDATE Account a SET a.money = :money WHERE a.id = :id")
+    int updateAccount(@Param("money") int money, @Param("id") int id);
 
-    @Query("SELECT a.balance FROM Account a WHERE a.accountNum = :accountNumber ")
-    BigDecimal getBalance(@Param("accountNumber") Long accountNumber);
+    @Query("SELECT a.money FROM Account a WHERE a.id = :id")
+    int getBalance(@Param("id") int id);
 
 }

@@ -3,17 +3,17 @@
 		"_postman_id": "fa2cedaf-ad0b-4fce-8915-a2a28e7ccf5b",
 		"name": "Bank",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26062871"
+		"_exporter_id": "25858720"
 	},
 	"item": [
 		{
-			"name": "createAccount",
+			"name": "createUser",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"mia\",\r\n    \"documentId\": \"1005280915\"\r\n}\r\n\r\n",
+					"raw": "{\r\n    \"name\": \"mia\",\r\n    \"last_name\": \"lacouture\",\r\n    \"documentId\": \"1005280915\"\r\n}\r\n    ",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,13 +21,60 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/createAccount",
+					"raw": "localhost:8080/users",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"createAccount"
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createAccount",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/1005280915",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"1005280915"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAccounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/1005280915/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"1005280915",
+						"accounts"
 					]
 				}
 			},
@@ -40,7 +87,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"accountNum\": \"996636998224100\",\r\n    \"balance\": \"500\"\r\n}",
+					"raw": "{\r\n    \"accountNumber\": \"26\",\r\n    \"depositAmount\": \"200\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -48,15 +95,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/deposit/1003102808728700/200",
+					"raw": "localhost:8080/deposit",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"deposit",
-						"1003102808728700",
-						"200"
+						"deposit"
 					]
 				}
 			},
@@ -68,14 +113,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/myBalance/1003102808728700",
+					"raw": "localhost:8080/myBalance/26",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"myBalance",
-						"1003102808728700"
+						"26"
 					]
 				}
 			},
@@ -86,17 +131,23 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"origin\" : 26,\r\n    \"destination\": 27,\r\n    \"amount\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/transfer/1001738724014300/1001827183539300/100",
+					"raw": "localhost:8080/transfer",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"transfer",
-						"1001738724014300",
-						"1001827183539300",
-						"100"
+						"transfer"
 					]
 				}
 			},

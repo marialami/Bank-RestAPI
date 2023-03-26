@@ -5,6 +5,7 @@ import com.rest.bank.controller.dto.UserDTO;
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
 import com.rest.bank.repository.AccountRepository;
+import com.rest.bank.repository.TransactionRepository;
 import com.rest.bank.repository.UserRepository;
 import com.rest.bank.service.AccountService;
 import com.rest.bank.service.UserService;
@@ -28,21 +29,23 @@ public class UserController {
 
     private AccountService accountService;
 
-    private AccountRepository accountRepository;
+    private TransactionRepository transactionRepository;
+
 
     @PostMapping("/users")
     public User createUser(@RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO.getDocumentId(),userDTO.getName());
+        return userService.createUser(userDTO.getDocumentId(),userDTO.getName(), userDTO.getLast_name());
     }
 
-    @PostMapping("/users/{userId}")
-    public String createAccount(@PathVariable int userId) {
+    @PostMapping("/users/{userId}/{type}")
+    public String createAccount(@PathVariable int userId, @PathVariable String type) {
         User user = userService.findById(userId).get();
         if (user.getAccounts().size() >= 3) {
             return "No puedes tener mas de tres cuentas asosciadas";
         }
         else{
-            return "Se creo correctamente la cuenta con número: "+accountService.createAccount(user).getAccountNum().toString();
+            return "Se creo correctamente la cuenta con número: "+accountService.createAccount(user,type).getId();
+
         }
 
 
@@ -54,7 +57,7 @@ public class UserController {
         User user = userService.findById(userId).get();
         for(Account a: user.getAccounts())
         {
-            accounts.add("Numero de Cuenta : "+a.getAccountNum());
+            accounts.add("Numero de Cuenta : "+a.getId());
         }
         return accounts;
     }

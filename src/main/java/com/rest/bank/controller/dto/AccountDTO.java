@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 public class AccountDTO {
 
     @NotNull
-    private Long accountNumber;
+    private int accountNumber;
 
     @NotNull
-    private BigDecimal depositAmount;
+    private int depositAmount;
 }
 

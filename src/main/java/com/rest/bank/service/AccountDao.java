@@ -1,7 +1,6 @@
 package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
-import com.rest.bank.model.User;
 import com.rest.bank.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
-public class AccountServiceBD implements AccountBD {
+public class AccountDao implements AccountBD {
 
     private AccountRepository accountRepository;
     @Override
@@ -19,17 +18,17 @@ public class AccountServiceBD implements AccountBD {
     }
 
     @Override
-    public Account selectAccount(Long accountNumber) {
-        return accountRepository.selectAccount(accountNumber);
+    public Account selectAccount(int id) {
+        return accountRepository.selectAccount(id);
     }
 
     @Override
-    public void updateAccount(BigDecimal balance, Long accountNumber) {
-        accountRepository.updateAccount(balance,accountNumber);
+    public void updateAccount(int money, int id) {
+        accountRepository.updateAccount(money,id);
     }
 
     @Override
-    public BigDecimal getBalance(Long accountNumber) {
-        return accountRepository.getBalance(accountNumber);
+    public int getBalance(int id) {
+        return accountRepository.getBalance(id);
     }
 }
