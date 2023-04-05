@@ -13,7 +13,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "USER")
+@Table(name = "`USER`")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,9 +25,11 @@ public class User {
 
     private String name;
 
-    private String last_name;
+    @Column(name = "`LAST_NAME`")
+    private String lastName;
 
-    private Date date_created;
+    @Column(name = "`DATE_CREATED`")
+    private Date dateCreated;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts;
