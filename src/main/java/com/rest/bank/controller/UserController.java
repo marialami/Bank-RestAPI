@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping("/users")
     public User createUser(@RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO.getDocumentId(),userDTO.getName(), userDTO.getLast_name());
+        return userService.createUser(userDTO.getDocument(),userDTO.getName(), userDTO.getLastName());
     }
 
     @PostMapping("/users/{userId}/{type}")
