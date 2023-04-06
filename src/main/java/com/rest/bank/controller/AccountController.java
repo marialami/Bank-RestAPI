@@ -4,7 +4,6 @@ import com.rest.bank.controller.dto.AccountDTO;
 import com.rest.bank.controller.dto.TransferDTO;
 import com.rest.bank.service.AccountService;
 import com.rest.bank.service.TransactionService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.Future;

@@ -1,13 +1,11 @@
 package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
-import com.rest.bank.model.Transaction;
 import com.rest.bank.model.User;
-import com.rest.bank.repository.TransactionRepository;
+import com.rest.bank.repository.AccountDao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

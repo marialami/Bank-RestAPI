@@ -1,15 +1,13 @@
 package com.rest.bank.service;
 
-import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
-import com.rest.bank.repository.UserRepository;
+import com.rest.bank.repository.UserDao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor

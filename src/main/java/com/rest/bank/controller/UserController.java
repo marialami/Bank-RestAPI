@@ -1,25 +1,17 @@
 package com.rest.bank.controller;
 
-import com.rest.bank.controller.dto.AccountDTO;
 import com.rest.bank.controller.dto.UserDTO;
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
-import com.rest.bank.repository.AccountRepository;
 import com.rest.bank.repository.TransactionRepository;
-import com.rest.bank.repository.UserRepository;
 import com.rest.bank.service.AccountService;
 import com.rest.bank.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.stylesheets.LinkStyle;
 
-import java.math.BigDecimal;
-import java.net.URI;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor

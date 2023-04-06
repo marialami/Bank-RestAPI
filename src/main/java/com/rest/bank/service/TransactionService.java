@@ -1,6 +1,7 @@
 package com.rest.bank.service;
 
 import com.rest.bank.model.Transaction;
+import com.rest.bank.repository.TransactionDao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

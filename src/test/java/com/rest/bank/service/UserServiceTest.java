@@ -1,6 +1,7 @@
 package com.rest.bank.service;
 
 import com.rest.bank.model.User;
+import com.rest.bank.repository.UserDao;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

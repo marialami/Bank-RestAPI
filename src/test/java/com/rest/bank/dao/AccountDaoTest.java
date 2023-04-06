@@ -3,7 +3,7 @@ package com.rest.bank.dao;
 
 import com.rest.bank.model.Account;
 import com.rest.bank.repository.AccountRepository;
-import com.rest.bank.service.AccountDao;
+import com.rest.bank.repository.AccountDao;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

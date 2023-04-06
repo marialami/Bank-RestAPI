@@ -2,6 +2,7 @@ package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
+import com.rest.bank.repository.AccountDao;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -31,7 +32,7 @@ public class AccountServiceTest {
 
     @Test
     public void given_user_and_type_when_createAccount_then_account_should_be_created() {
-        // given
+
         User user = User.builder()
                 .document(123456789)
                 .name("John")
@@ -41,12 +42,6 @@ public class AccountServiceTest {
                 .build();
         String type = "Ahorros";
 
-        Account account = Account.builder()
-                .money(0)
-                .date_created(new Date())
-                .user(user)
-                .type(type)
-                .build();
         when(accountDaoMock.save(any(Account.class))).thenAnswer(invocation -> {
             Account a = invocation.getArgument(0);
             a.setId(0);
@@ -61,16 +56,13 @@ public class AccountServiceTest {
 
     @Test
     public void given_account_id_and_deposit_amount_when_makeDeposit_then_account_balance_should_be_updated() {
-        // given
         int accountId = 1;
         int depositAmount = 100;
         int currentBalance = 500;
         when(accountDaoMock.getBalance(accountId)).thenReturn(currentBalance);
 
-        // when
         accountService.makeDeposit(accountId, depositAmount);
 
-        // then
         Mockito.verify(accountDaoMock, times(1)).updateAccount(currentBalance + depositAmount, accountId);
     }
 
