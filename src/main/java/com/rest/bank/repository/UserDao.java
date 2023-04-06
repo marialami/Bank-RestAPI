@@ -1,7 +1,7 @@
-package com.rest.bank.service;
+package com.rest.bank.repository;
 
 import com.rest.bank.model.User;
-import com.rest.bank.repository.UserRepository;
+import com.rest.bank.service.UserBD;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-public class UserDao implements UserBD{
+public class UserDao implements UserBD {
 
     private UserRepository userRepository;
     @Override

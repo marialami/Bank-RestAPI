@@ -6,12 +6,12 @@ import lombok.Data;
 @Data
 public class UserDTO {
     @NotNull
-    private int documentId;
+    private int document;
 
     @NotNull
     private String name;
 
     @NotNull
-    private String last_name;
+    private String lastName;
 
 }

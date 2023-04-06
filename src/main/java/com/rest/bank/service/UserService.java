@@ -1,15 +1,13 @@
 package com.rest.bank.service;
 
-import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
-import com.rest.bank.repository.UserRepository;
+import com.rest.bank.repository.UserDao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -21,9 +19,9 @@ public class UserService {
         User user = User.builder()
                 .document(document)
                 .name(name)
-                .last_name(lastName)
+                .lastName(lastName)
                 .accounts(List.of())
-                .date_created(new Date())
+                .dateCreated(new Date())
                 .build();
         return rp.save(user);
     }
@@ -31,7 +29,5 @@ public class UserService {
     public Optional<User> findById(int id){
         return rp.findById(id);
     }
-
-
 
 }

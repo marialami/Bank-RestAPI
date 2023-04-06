@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "ACCOUNT")
+@Table(name = "`ACCOUNT`")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +17,7 @@ import java.util.Date;
 public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "`user`")
     private User user;
     private int money;
 
