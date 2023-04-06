@@ -2,7 +2,7 @@ name: Continuous-integration
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master", "develop"]
 
 permissions:
   contents: read
