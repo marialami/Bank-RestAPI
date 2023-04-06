@@ -37,7 +37,6 @@ public class UserController {
         }
         else{
             return "Se creo correctamente la cuenta con número: "+accountService.createAccount(user,type).getId();
-
         }
 
 
