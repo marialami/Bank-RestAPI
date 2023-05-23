@@ -3,6 +3,7 @@ package com.rest.bank.controller;
 import com.rest.bank.controller.dto.UserDTO;
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
+import com.rest.bank.model.enums.AccountType;
 import com.rest.bank.repository.TransactionRepository;
 import com.rest.bank.service.AccountService;
 import com.rest.bank.service.UserService;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.persistence.AccessType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/users/{userId}/{type}")
-    public String createAccount(@PathVariable int userId, @PathVariable String type) {
+    public String createAccount(@PathVariable int userId, @PathVariable AccountType type) {
         User user = userService.findById(userId).get();
         if (user.getAccounts().size() >= 3) {
             return "No puedes tener mas de tres cuentas asosciadas";

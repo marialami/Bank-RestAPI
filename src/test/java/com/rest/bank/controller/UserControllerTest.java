@@ -3,6 +3,7 @@ package com.rest.bank.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
+import com.rest.bank.model.enums.AccountType;
 import com.rest.bank.repository.TransactionRepository;
 import com.rest.bank.service.AccountService;
 import com.rest.bank.service.UserService;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
+import javax.persistence.AccessType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -88,10 +90,9 @@ public class UserControllerTest {
         List<Account> accounts = new ArrayList<>();
         accounts.add(new Account());
         user.setAccounts(accounts);
+        given(accountService.createAccount(user, AccountType.AHORROS)).willReturn(accounts.get(0));
 
-        given(accountService.createAccount(user, "type")).willReturn(accounts.get(0));
-
-        mockMvc.perform(post("/users/{userId}/{type}", user.getDocument(), "type"))
+        mockMvc.perform(post("/users/{userId}/{type}", user.getDocument(), AccountType.AHORROS))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Se creo correctamente la cuenta con número: " + accounts.get(0).getId())));
     }
@@ -112,7 +113,7 @@ public class UserControllerTest {
 
         given(userService.findById(user.getDocument())).willReturn(Optional.of(user));
 
-        mockMvc.perform(post("/users/{userId}/{type}", user.getDocument(), "ahorros"))
+        mockMvc.perform(post("/users/{userId}/{type}", user.getDocument(), AccountType.AHORROS))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("No puedes tener mas de tres cuentas asosciadas")));
     }

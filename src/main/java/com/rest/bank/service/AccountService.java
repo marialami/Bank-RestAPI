@@ -2,10 +2,12 @@ package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
+import com.rest.bank.model.enums.AccountType;
 import com.rest.bank.repository.AccountDao;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.AccessType;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +19,7 @@ public class AccountService {
 
     private AccountDao bd;
 
-    public Account createAccount(User user, String type){
+    public Account createAccount(User user, AccountType type){
 
         Account account = Account.builder()
                 .money(0)

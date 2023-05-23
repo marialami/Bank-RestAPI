@@ -2,6 +2,7 @@ package com.rest.bank.service;
 
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
+import com.rest.bank.model.enums.AccountType;
 import com.rest.bank.repository.AccountDao;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -40,7 +41,7 @@ public class AccountServiceTest {
                 .accounts(List.of())
                 .dateCreated(new Date())
                 .build();
-        String type = "Ahorros";
+        AccountType type = AccountType.AHORROS;
 
         when(accountDaoMock.save(any(Account.class))).thenAnswer(invocation -> {
             Account a = invocation.getArgument(0);
