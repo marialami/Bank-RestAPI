@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
-public class AccountDao implements AccountBD {
+public class  AccountDao implements AccountBD {
 
     private AccountRepository accountRepository;
     @Override
