@@ -2,6 +2,7 @@ package com.rest.bank.dao;
 
 
 import com.rest.bank.model.Account;
+import com.rest.bank.model.enums.AccountType;
 import com.rest.bank.repository.AccountRepository;
 import com.rest.bank.repository.AccountDao;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class AccountDaoTest {
     public void given_account_when_save_then_return_saved_account() {
         Account account = Account.builder()
                 .money(0)
-                .type("Ahorros")
+                .type(AccountType.AHORROS)
                 .date_created(new Date())
                 .build();
         when(accountRepositoryMock.save(account)).thenReturn(account);
@@ -45,7 +46,7 @@ public class AccountDaoTest {
     public void given_account_id_when_selectAccount_then_return_account() {
         Account account = Account.builder()
                 .money(0)
-                .type("Ahorros")
+                .type(AccountType.AHORROS)
                 .date_created(new Date())
                 .build();
         when(accountRepositoryMock.selectAccount(account.getId())).thenReturn(account);

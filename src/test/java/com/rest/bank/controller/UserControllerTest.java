@@ -1,5 +1,7 @@
 package com.rest.bank.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
@@ -25,6 +27,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -60,9 +64,10 @@ public class UserControllerTest {
                 .lastName("Doe")
                 .accounts(List.of())
                 .dateCreated(new Date())
+                .password("messi")
                 .build();
 
-        given(userService.createUser(anyInt(), anyString(), anyString())).willReturn(user);
+        given(userService.createUser(anyInt(), anyString(), anyString(),anyString())).willReturn(user);
 
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -70,6 +75,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.document", is(123456789)))
                 .andExpect(jsonPath("$.name", is("John")))
+                .andExpect(jsonPath("$.password", is("messi")))
                 .andExpect(jsonPath("$.lastName", is("Doe")));
     }
 
@@ -119,6 +125,7 @@ public class UserControllerTest {
         user.setDocument(123456789);
         user.setName("John");
         user.setLastName("Doe");
+        user.setPassword("Messi");
 
         List<Account> accounts = new ArrayList<>();
         accounts.add(new Account());
@@ -132,8 +139,30 @@ public class UserControllerTest {
         mockMvc.perform(get("/{userId}/accounts", user.getDocument()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
-                .andExpect(jsonPath("$[0]", containsString("Numero de Cuenta")))
-                .andExpect(jsonPath("$[1]", containsString("Numero de Cuenta")))
-                .andExpect(jsonPath("$[2]", containsString("Numero de Cuenta")));
+                .andExpect(jsonPath("$[0].user", is("John")))
+                .andExpect(jsonPath("$[1].user", is("John")))
+                .andExpect(jsonPath("$[2].user", is("John")));
+    }
+
+    @Test
+
+    public void given_a_get_request_when_invoke_login_then_return_the_true() throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = mapper.createObjectNode()
+                .put("document", 123456789)
+                .put("password", "messi");
+        String jsonString = mapper.writeValueAsString(json);
+
+        given(userService.validateCredentials(123456789,"messi")).willReturn(true);
+
+        mockMvc.perform(get("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonString))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(true)));
+
+        verify(userService,times(1)).validateCredentials(123456789,"messi");
+
     }
 }

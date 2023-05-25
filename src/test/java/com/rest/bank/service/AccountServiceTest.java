@@ -1,5 +1,8 @@
 package com.rest.bank.service;
 
+import com.rest.bank.controller.dto.DepositDTO;
+import com.rest.bank.controller.dto.TransferDTO;
+import com.rest.bank.feign.TransactionFeign;
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
 import com.rest.bank.model.enums.AccountType;
@@ -30,6 +33,9 @@ public class AccountServiceTest {
     @Mock
     private AccountDao accountDaoMock;
 
+    @Mock
+    private TransactionFeign transactionFeign;
+
 
     @Test
     public void given_user_and_type_when_createAccount_then_account_should_be_created() {
@@ -59,12 +65,13 @@ public class AccountServiceTest {
     public void given_account_id_and_deposit_amount_when_makeDeposit_then_account_balance_should_be_updated() {
         int accountId = 1;
         int depositAmount = 100;
-        int currentBalance = 500;
-        when(accountDaoMock.getBalance(accountId)).thenReturn(currentBalance);
 
-        accountService.makeDeposit(accountId, depositAmount);
+        DepositDTO depositDTO = DepositDTO.builder().accountNumber(accountId).depositAmount(depositAmount).build();
+        when(transactionFeign.depositFunds(depositDTO)).thenReturn("Deposit completed successfully");
 
-        Mockito.verify(accountDaoMock, times(1)).updateAccount(currentBalance + depositAmount, accountId);
+        String result = accountService.makeDeposit(depositDTO);
+        assertEquals(result,"Deposit completed successfully");
+        Mockito.verify(transactionFeign, times(1)).depositFunds(depositDTO);
     }
 
     @Test
@@ -84,26 +91,28 @@ public class AccountServiceTest {
         int originAccountNumber = 1;
         int destinationAccountNumber = 2;
         int transferAmount = 100;
-        int originAccountBalance = 500;
-        when(accountDaoMock.getBalance(originAccountNumber)).thenReturn(originAccountBalance);
+        TransferDTO transferDTO = TransferDTO.builder().origin(originAccountNumber).destination(destinationAccountNumber).amount(transferAmount).build();
+        when(transactionFeign.transfer(transferDTO)).thenReturn("Transaction completed successfully");
 
-        String result = accountService.transfer(originAccountNumber, destinationAccountNumber, transferAmount).get();
-        verify(accountDaoMock, times(2)).getBalance(originAccountNumber);
-        verify(accountDaoMock, times(1)).updateAccount(originAccountBalance - transferAmount, originAccountNumber);
-        verify(accountDaoMock, times(1)).updateAccount(transferAmount, destinationAccountNumber);
+        String result = accountService.transfer(transferDTO);
         assertEquals("Transaction completed successfully", result);
+        verify(transactionFeign,times(1)).transfer(transferDTO);
     }
+
+
 
     @Test
     public void given_origin_account_number_destination_account_number_and_transfer_amount_when_transfer_found_are_invalid_then_balance_should_be_updated() throws Exception {
         int originAccountNumber = 1;
         int destinationAccountNumber = 2;
-        int transferAmount = 600;
-        int originAccountBalance = 500;
-        when(accountDaoMock.getBalance(originAccountNumber)).thenReturn(originAccountBalance);
+        int transferAmount = 100;
+        TransferDTO transferDTO = TransferDTO.builder().origin(originAccountNumber).destination(destinationAccountNumber).amount(transferAmount).build();
+        when(transactionFeign.transfer(transferDTO)).thenReturn("There's not enough money in your account");
 
-        String result = accountService.transfer(originAccountNumber, destinationAccountNumber, transferAmount).get();
+        String result = accountService.transfer(transferDTO);
         assertEquals("There's not enough money in your account", result);
+        verify(transactionFeign,times(1)).transfer(transferDTO);
     }
+
 
 }

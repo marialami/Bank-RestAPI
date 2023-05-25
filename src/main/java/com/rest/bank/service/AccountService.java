@@ -44,7 +44,6 @@ public class AccountService {
     }
 
     public String transfer(TransferDTO transferDTO) throws Exception {
-
         return  transactionFeign.transfer(transferDTO);
     }
 }
