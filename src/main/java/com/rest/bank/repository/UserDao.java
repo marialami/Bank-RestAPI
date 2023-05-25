@@ -21,4 +21,9 @@ public class UserDao implements UserBD {
     public Optional<User> findById(int id) {
         return userRepository.findById(id);
     }
+
+    @Override
+    public User validateCredentials(int document, String password) {
+        return userRepository.validateCredentials(document,password);
+    }
 }

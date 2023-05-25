@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
 import com.rest.bank.model.enums.AccountType;
-import com.rest.bank.repository.TransactionRepository;
 import com.rest.bank.service.AccountService;
 import com.rest.bank.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-import javax.persistence.AccessType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,9 +42,6 @@ public class UserControllerTest {
 
     @MockBean
     private AccountService accountService;
-
-    @MockBean
-    private TransactionRepository transactionRepository;
 
     private static String jsonToString(final Object obj) {
         try {

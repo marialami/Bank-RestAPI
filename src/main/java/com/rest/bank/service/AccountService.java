@@ -1,5 +1,8 @@
 package com.rest.bank.service;
 
+import com.rest.bank.controller.dto.DepositDTO;
+import com.rest.bank.controller.dto.TransferDTO;
+import com.rest.bank.feign.TransactionFeign;
 import com.rest.bank.model.Account;
 import com.rest.bank.model.User;
 import com.rest.bank.model.enums.AccountType;
@@ -18,6 +21,7 @@ import java.util.concurrent.Future;
 public class AccountService {
 
     private AccountDao bd;
+    private TransactionFeign transactionFeign;
 
     public Account createAccount(User user, AccountType type){
 
@@ -31,36 +35,17 @@ public class AccountService {
         return bd.save(account);
     }
 
-    public void makeDeposit(int id, int depositAmount) {
-
-        bd.updateAccount(getBalance(id) + depositAmount , id);
-
+    public String makeDeposit(DepositDTO depositDTO) {
+        return  transactionFeign.depositFunds(depositDTO);
     }
 
     public int getBalance(int id) {
         return bd.getBalance(id);
     }
 
-    public Future<String> transfer(int originAccountNumber, int destinationAccountNumber, int transferAmount) throws Exception {
+    public String transfer(TransferDTO transferDTO) throws Exception {
 
-        ExecutorService executor = Executors.newFixedThreadPool(1);
-
-        Future<String> future = executor
-                .submit(() -> {
-                    int originBalance = getBalance(originAccountNumber);
-                    if(originBalance >= transferAmount) {
-                        makeDeposit(originAccountNumber, -transferAmount);
-                        makeDeposit(destinationAccountNumber, transferAmount);
-                        return "Transaction completed successfully";
-                    }
-                    else {
-                        return "There's not enough money in your account";
-                    }
-                });
-
-        executor.shutdown();
-
-        return future;
+        return  transactionFeign.transfer(transferDTO);
     }
 }
 

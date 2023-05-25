@@ -4,17 +4,11 @@ import com.sun.istack.NotNull;
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class LoginDTO {
+
     @NotNull
     private int document;
 
     @NotNull
-    private String name;
-
-    @NotNull
-    private String lastName;
-
-    @NotNull
     private String password;
-
 }

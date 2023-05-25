@@ -1,8 +1,5 @@
 package com.rest.bank.dao;
 
-import com.rest.bank.model.Transaction;
-import com.rest.bank.repository.TransactionRepository;
-import com.rest.bank.repository.TransactionDao;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -29,6 +29,8 @@ public class User {
     @Column(name = "`DATE_CREATED`")
     private Date dateCreated;
 
+    private String password;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts;
 }
