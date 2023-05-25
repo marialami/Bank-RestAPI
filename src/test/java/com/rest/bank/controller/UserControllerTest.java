@@ -145,8 +145,7 @@ public class UserControllerTest {
     }
 
     @Test
-
-    public void given_a_get_request_when_invoke_login_then_return_the_true() throws Exception {
+    public void given_a_get_request_when_invoke_login_then_return_the_user() throws Exception {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode json = mapper.createObjectNode()
@@ -154,13 +153,22 @@ public class UserControllerTest {
                 .put("password", "messi");
         String jsonString = mapper.writeValueAsString(json);
 
-        given(userService.validateCredentials(123456789,"messi")).willReturn(true);
+        User user = new User();
+        user.setDocument(123456789);
+        user.setName("John");
+        user.setLastName("Doe");
+        user.setPassword("messi");
+
+        given(userService.validateCredentials(123456789,"messi")).willReturn(user);
 
         mockMvc.perform(get("/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(true)));
+                .andExpect(jsonPath("$.document", is(123456789)))
+                .andExpect(jsonPath("$.name", is("John")))
+                .andExpect(jsonPath("$.password", is("messi")))
+                .andExpect(jsonPath("$.lastName", is("Doe")));
 
         verify(userService,times(1)).validateCredentials(123456789,"messi");
 

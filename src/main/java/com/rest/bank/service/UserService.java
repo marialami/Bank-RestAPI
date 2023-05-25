@@ -31,8 +31,12 @@ public class UserService {
         return rp.findById(id);
     }
 
-    public  boolean validateCredentials(int document, String password){
-        return rp.validateCredentials(document, password) != null;
+    public User validateCredentials(int document, String password){
+
+        if (rp.validateCredentials(document, password) != null)
+            return rp.validateCredentials(document, password);
+        else
+            return User.builder().build();
     }
 
 }

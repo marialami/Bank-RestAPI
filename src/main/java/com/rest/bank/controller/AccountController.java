@@ -5,6 +5,7 @@ import com.rest.bank.controller.dto.TransferDTO;
 import com.rest.bank.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class AccountController {
 

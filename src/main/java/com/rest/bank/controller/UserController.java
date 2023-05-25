@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 public class UserController {
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public Boolean loginUser(@RequestBody LoginDTO loginDTO){
+    public User loginUser(@RequestBody LoginDTO loginDTO){
         return userService.validateCredentials(loginDTO.getDocument(),loginDTO.getPassword());
     }
 

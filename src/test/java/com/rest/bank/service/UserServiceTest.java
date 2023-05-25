@@ -73,7 +73,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void given_the_correct_user_document_and_password_when_invoked_validateCredentials_them_return_true(){
+    public void given_the_correct_user_document_and_password_when_invoked_validateCredentials_them_return_the_user(){
         User user = User.builder()
                 .document(123456789)
                 .name("John")
@@ -85,28 +85,28 @@ public class UserServiceTest {
 
         when(userDao.validateCredentials(123456789,"messi")).thenReturn(user);
 
-        boolean result = userService.validateCredentials(user.getDocument(),user.getPassword());
+        User result = userService.validateCredentials(user.getDocument(),user.getPassword());
 
-        assertTrue(result);
-        verify(userDao,times(1)).validateCredentials(user.getDocument(),user.getPassword());
+        assertEquals(result,user);
+        verify(userDao,times(2)).validateCredentials(user.getDocument(),user.getPassword());
     }
 
     @Test
     public void given_the_incorrect_user_document_and_password_when_invoked_validateCredentials_them_return_true(){
         User user = User.builder()
-                .document(123456789)
-                .name("John")
-                .lastName("Doe")
-                .accounts(List.of())
-                .password("messi")
-                .dateCreated(new Date())
+                .document(0)
+                .name(null)
+                .lastName(null)
+                .accounts(null)
+                .password(null)
+                .dateCreated(null)
                 .build();
 
         when(userDao.validateCredentials(1234567895,"messi")).thenReturn(null);
 
-        boolean result = userService.validateCredentials(1234567895,user.getPassword());
+        User result = userService.validateCredentials(1234567895,"messi");
 
-        assertFalse(result);
-        verify(userDao,times(1)).validateCredentials(1234567895,user.getPassword());
+        assertEquals(result,user);
+        verify(userDao,times(1)).validateCredentials(1234567895,"messi");
     }
 }
