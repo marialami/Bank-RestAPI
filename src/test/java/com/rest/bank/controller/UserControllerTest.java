@@ -136,7 +136,8 @@ public class UserControllerTest {
 
         given(userService.findById(user.getDocument())).willReturn(Optional.of(user));
 
-        mockMvc.perform(get("/{userId}/accounts", user.getDocument()))
+        mockMvc.perform(get("/accounts")
+                        .param("userId", user.getDocument()+""))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(3)))
                 .andExpect(jsonPath("$[0].user", is("John")))
@@ -162,8 +163,8 @@ public class UserControllerTest {
         given(userService.validateCredentials(123456789,"messi")).willReturn(user);
 
         mockMvc.perform(get("/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonString))
+                    .param("document", "123456789")
+                    .param("password", "messi"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.document", is(123456789)))
                 .andExpect(jsonPath("$.name", is("John")))

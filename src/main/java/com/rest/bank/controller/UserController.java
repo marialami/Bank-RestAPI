@@ -32,8 +32,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public User loginUser(@RequestBody LoginDTO loginDTO){
-        return userService.validateCredentials(loginDTO.getDocument(),loginDTO.getPassword());
+    public User loginUser(@RequestParam int document, @RequestParam String password) {
+        return userService.validateCredentials(document, password);
     }
 
     @PostMapping("/users/{userId}/{type}")
@@ -49,8 +49,8 @@ public class UserController {
 
     }
 
-    @GetMapping("/{userId}/accounts")
-    public List<JsonNode> getAccountsForUser(@PathVariable int userId) throws JsonProcessingException {
+    @GetMapping("/accounts")
+    public List<JsonNode> getAccountsForUser(@RequestParam int userId) throws JsonProcessingException {
         List<JsonNode> accounts = new ArrayList<>();
         User user = userService.findById(userId).get();
         ObjectMapper mapper = new ObjectMapper();
