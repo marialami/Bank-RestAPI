@@ -5,7 +5,8 @@ import lombok.*;
 
 
 @Data
-public class AccountDTO {
+@Builder
+public class DepositDTO {
 
     @NotNull
     private int accountNumber;

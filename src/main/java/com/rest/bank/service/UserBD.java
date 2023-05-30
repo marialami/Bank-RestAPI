@@ -9,4 +9,6 @@ public interface UserBD {
     User save(User user);
 
     Optional<User> findById(int id);
+
+    User validateCredentials(int document, String password);
 }

@@ -1,5 +1,6 @@
 package com.rest.bank.model;
 
+import com.rest.bank.model.enums.AccountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class Account {
 
     private Date date_created;
 
-    private String type;
+    private AccountType type;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

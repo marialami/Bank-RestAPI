@@ -15,19 +15,28 @@ public class UserService {
 
     private UserDao rp;
 
-    public User createUser(int document, String name, String lastName){
+    public User createUser(int document, String name, String lastName, String password){
         User user = User.builder()
                 .document(document)
                 .name(name)
                 .lastName(lastName)
                 .accounts(List.of())
                 .dateCreated(new Date())
+                .password(password)
                 .build();
         return rp.save(user);
     }
 
     public Optional<User> findById(int id){
         return rp.findById(id);
+    }
+
+    public User validateCredentials(int document, String password){
+
+        if (rp.validateCredentials(document, password) != null)
+            return rp.validateCredentials(document, password);
+        else
+            return User.builder().build();
     }
 
 }

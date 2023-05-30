@@ -15,9 +15,8 @@ import java.util.Optional;
 
 import org.mockito.Mockito;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -35,19 +34,22 @@ public class UserServiceTest {
         int document = 123456789;
         String name = "John";
         String lastName = "Doe";
+        String password = "messi";
         User user = User.builder()
                 .document(document)
                 .name(name)
                 .lastName(lastName)
                 .accounts(List.of())
+                .password(password)
                 .dateCreated(new Date())
                 .build();
         when(userDao.save(Mockito.any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
-        User createdUser = userService.createUser(document, name, lastName);
+        User createdUser = userService.createUser(document, name, lastName,password);
         assertNotNull(createdUser);
         assertEquals(createdUser.getDocument(), document);
         assertEquals(createdUser.getName(), name);
         assertEquals(createdUser.getLastName(), lastName);
+        assertEquals(createdUser.getPassword(), password);
         assertEquals(createdUser.getAccounts(), List.of());
     }
 
@@ -68,5 +70,43 @@ public class UserServiceTest {
         Mockito.verify(userDao, times(1)).findById(id);
         assertTrue(foundUser.isPresent());
         assertEquals(foundUser.get(), user);
+    }
+
+    @Test
+    public void given_the_correct_user_document_and_password_when_invoked_validateCredentials_them_return_the_user(){
+        User user = User.builder()
+                .document(123456789)
+                .name("John")
+                .lastName("Doe")
+                .accounts(List.of())
+                .password("messi")
+                .dateCreated(new Date())
+                .build();
+
+        when(userDao.validateCredentials(123456789,"messi")).thenReturn(user);
+
+        User result = userService.validateCredentials(user.getDocument(),user.getPassword());
+
+        assertEquals(result,user);
+        verify(userDao,times(2)).validateCredentials(user.getDocument(),user.getPassword());
+    }
+
+    @Test
+    public void given_the_incorrect_user_document_and_password_when_invoked_validateCredentials_them_return_true(){
+        User user = User.builder()
+                .document(0)
+                .name(null)
+                .lastName(null)
+                .accounts(null)
+                .password(null)
+                .dateCreated(null)
+                .build();
+
+        when(userDao.validateCredentials(1234567895,"messi")).thenReturn(null);
+
+        User result = userService.validateCredentials(1234567895,"messi");
+
+        assertEquals(result,user);
+        verify(userDao,times(1)).validateCredentials(1234567895,"messi");
     }
 }

@@ -2,8 +2,9 @@ package com.rest.bank.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rest.bank.controller.dto.DepositDTO;
+import com.rest.bank.controller.dto.TransferDTO;
 import com.rest.bank.service.AccountService;
-import com.rest.bank.service.TransactionService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,6 @@ public class AccountControllerTest {
     @MockBean
     private AccountService accountService;
 
-    @MockBean
-    private TransactionService transactionService;
-
     @Test
     public void given_a_put_request_when_invoke_deposit_then_return_the_success_message() throws Exception {
 
@@ -45,11 +43,16 @@ public class AccountControllerTest {
                 .put("depositAmount", 100);
         String jsonString = mapper.writeValueAsString(json);
 
+        DepositDTO depositDTO = DepositDTO.builder().depositAmount(100).accountNumber(1).build();
+        when(accountService.makeDeposit(depositDTO)).thenReturn("Deposit completed successfully");
+
         mockMvc.perform(put("/deposit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Deposit completed successfully"));
+        verify(accountService,times(1)).makeDeposit(depositDTO);
+
     }
     @Test
     public void given_a_get_request_when_invoke_getBalance_then_return_the_account_balance() throws Exception {
@@ -72,15 +75,16 @@ public class AccountControllerTest {
                 .put("amount",100);
         String jsonString = mapper.writeValueAsString(json);
         String successMessage = "Transaction completed successfully";
-        when(accountService.transfer(12345, 54321,100)).thenReturn(CompletableFuture.completedFuture(successMessage));
+        TransferDTO transferDTO = TransferDTO.builder().amount(100).destination(54321).origin(12345).build();
+        when(accountService.transfer(transferDTO)).thenReturn("Transaction completed successfully");
 
         mockMvc.perform(put("/transfer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk())
                 .andExpect(content().string(successMessage));
+        verify(accountService,times(1)).transfer(transferDTO);
 
-        verify(transactionService, times(1)).createTransaction(12345,54321,100);
     }
 
     @Test
@@ -93,13 +97,15 @@ public class AccountControllerTest {
                 .put("amount",100);
         String jsonString = mapper.writeValueAsString(json);
         String successMessage = "Transaction completed successfully";
-        when(accountService.transfer(12345, 54321,100)).thenReturn(CompletableFuture.completedFuture("Insufficient funds in the source account"));
+        TransferDTO transferDTO = TransferDTO.builder().amount(100).destination(54321).origin(12345).build();
+        when(accountService.transfer(transferDTO)).thenReturn("Insufficient funds in the source account");
 
         mockMvc.perform(put("/transfer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonString))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Insufficient funds in the source account"));
+        verify(accountService,times(1)).transfer(transferDTO);
 
     }
 }
